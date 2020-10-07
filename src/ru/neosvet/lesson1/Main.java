@@ -10,6 +10,20 @@ public class Main {
         checkPolarity(-5);
         System.out.printf("Result of task 6: %b \n", isNegativeNumber(-7));
         printName("Юрий");
+        int year = 2020;
+        if (isLeapYear(year))
+            System.out.printf("Result of task 8: %d - високосный год\n", year);
+        else
+            System.out.printf("Result of task 8: %d - не високосный год\n", year);
+    }
+
+    private static boolean isLeapYear(int year) {
+        if (year % 4 == 0) {
+            if (year % 100 == 0 && year % 400 != 0)
+                return false;
+            return true;
+        }
+        return false;
     }
 
     private static void printName(String name) {
