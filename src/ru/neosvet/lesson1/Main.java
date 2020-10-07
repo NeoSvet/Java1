@@ -6,6 +6,15 @@ public class Main {
         initVals();
         float result = countThreeTask(1, 2, 3, 4);
         System.out.printf("Result of task 3: %f \n", result);
+        System.out.printf("Result of task 4: %b \n", checkNumbers(4, 8));
+    }
+
+    private static boolean checkNumbers(int a, int b) {
+        int sum = a + b;
+        if (sum > 9 && sum < 21)
+            return true;
+        else
+            return false;
     }
 
     private static float countThreeTask(int a, int b, int c, int d) {
