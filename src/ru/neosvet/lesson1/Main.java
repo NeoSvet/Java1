@@ -9,6 +9,11 @@ public class Main {
         System.out.printf("Result of task 4: %b \n", checkNumbers(4, 8));
         checkPolarity(-5);
         System.out.printf("Result of task 6: %b \n", isNegativeNumber(-7));
+        printName("Юрий");
+    }
+
+    private static void printName(String name) {
+        System.out.printf("Result of task 7: Привет, %s!\n", name);
     }
 
     private static boolean isNegativeNumber(int i) {
