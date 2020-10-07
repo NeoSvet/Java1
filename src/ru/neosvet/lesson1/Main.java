@@ -7,6 +7,14 @@ public class Main {
         float result = countThreeTask(1, 2, 3, 4);
         System.out.printf("Result of task 3: %f \n", result);
         System.out.printf("Result of task 4: %b \n", checkNumbers(4, 8));
+        checkPolarity(-5);
+    }
+
+    private static void checkPolarity(int i) {
+        if (i < 0)
+            System.out.println("Result of task 5: передали отрицательное число");
+        else
+            System.out.println("Result of task 5: передали положительное число");
     }
 
     private static boolean checkNumbers(int a, int b) {
