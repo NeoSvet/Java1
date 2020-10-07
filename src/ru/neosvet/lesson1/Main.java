@@ -4,6 +4,12 @@ public class Main {
 
     public static void main(String[] args) {
         initVals();
+        float result = countThreeTask(1, 2, 3, 4);
+        System.out.printf("Result of task 3: %f \n", result);
+    }
+
+    private static float countThreeTask(int a, int b, int c, int d) {
+        return (float) a * (b + ((float) c / d));
     }
 
     private static void initVals() {
