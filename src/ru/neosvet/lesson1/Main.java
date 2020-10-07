@@ -8,6 +8,11 @@ public class Main {
         System.out.printf("Result of task 3: %f \n", result);
         System.out.printf("Result of task 4: %b \n", checkNumbers(4, 8));
         checkPolarity(-5);
+        System.out.printf("Result of task 6: %b \n", isNegativeNumber(-7));
+    }
+
+    private static boolean isNegativeNumber(int i) {
+        return i < 0;
     }
 
     private static void checkPolarity(int i) {
