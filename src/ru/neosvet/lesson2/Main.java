@@ -9,13 +9,14 @@ public class Main {
         System.out.println("Result of task 1: " + Arrays.toString(result));
         result = getNumsMultiplesThree(8);
         System.out.println("Result of task 2: " + Arrays.toString(result));
-        result = increaseNums(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1}, 6);
+        int[] arr = new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        result = increaseNums(arr, 6);
         System.out.println("Result of task 3: " + Arrays.toString(result));
         printMatrixCross(5);
-        findMinAndMax(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1});
+        findMinAndMax(arr);
         checkBalance(new int[]{2, 2, 2, 1, 2, 2, 10, 1});
         checkBalance(new int[]{2, 3, 1, 2, 1});
-        result = moveItemsInArr(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1}, -4);
+        result = moveItemsInArr(arr, -4);
         System.out.println("Result of task 7: " + Arrays.toString(result));
     }
 
