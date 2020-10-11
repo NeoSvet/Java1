@@ -12,6 +12,18 @@ public class Main {
         result = increaseNums(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1}, 6);
         System.out.println("Result of task 3: " + Arrays.toString(result));
         printMatrixCross(5);
+        findMinAndMax(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1});
+    }
+
+    private static void findMinAndMax(int[] arr) {
+        int min = arr[0], max = min;
+        for (int i = 1; i < arr.length; i++) {
+            if (min > arr[i])
+                min = arr[i];
+            if (max < arr[i]) //maybe else if?
+                max = arr[i];
+        }
+        System.out.printf("Result of task 5: min=%d, max=%d\n", min, max);
     }
 
     private static void printMatrixCross(int len) {
