@@ -15,6 +15,23 @@ public class Main {
         findMinAndMax(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1});
         checkBalance(new int[]{2, 2, 2, 1, 2, 2, 10, 1});
         checkBalance(new int[]{2, 3, 1, 2, 1});
+        result = moveItemsInArr(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1}, -4);
+        System.out.println("Result of task 7: " + Arrays.toString(result));
+    }
+
+    private static int[] moveItemsInArr(int[] arr, int step) {
+        System.out.println("Array in task 7: " + Arrays.toString(arr));
+        int[] narr = new int[arr.length];
+        int ni;
+        for (int i = 0; i < arr.length; i++) {
+            ni = i + step;
+            if (ni < 0)
+                ni += arr.length;
+            else if (ni >= arr.length)
+                ni -= arr.length;
+            narr[ni] = arr[i];
+        }
+        return narr;
     }
 
     private static void checkBalance(int[] arr) {
