@@ -18,6 +18,30 @@ public class Main {
         checkBalance(new int[]{2, 3, 1, 2, 1});
         result = moveItemsInArr(arr, -4);
         System.out.println("Result of task 7: " + Arrays.toString(result));
+        result = moveItemsInArr2(arr, -4);
+        System.out.println("Result of task 7 (without addition array): " + Arrays.toString(result));
+    }
+
+    private static int[] moveItemsInArr2(int[] arr, int step) {
+        System.out.println("Array in task 7 (without addition array): " + Arrays.toString(arr));
+        int ni, item1, item2, count_moved = 0, i = 0;
+        while (count_moved < arr.length) {
+            ni = i;
+            item1 = arr[i];
+            do {
+                ni = ni + step;
+                if (ni < 0)
+                    ni += arr.length;
+                else if (ni >= arr.length)
+                    ni -= arr.length;
+                item2 = arr[ni];
+                arr[ni] = item1;
+                item1 = item2;
+                count_moved++;
+            } while (ni != i);
+            i++;
+        }
+        return arr;
     }
 
     private static int[] moveItemsInArr(int[] arr, int step) {
