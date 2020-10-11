@@ -13,6 +13,25 @@ public class Main {
         System.out.println("Result of task 3: " + Arrays.toString(result));
         printMatrixCross(5);
         findMinAndMax(new int[]{1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1});
+        checkBalance(new int[]{2, 2, 2, 1, 2, 2, 10, 1});
+        checkBalance(new int[]{2, 3, 1, 2, 1});
+    }
+
+    private static void checkBalance(int[] arr) {
+        int iStart = 0, iEnd = arr.length - 1;
+        int sumStart = arr[iStart], sumEnd = arr[iEnd];
+        while (iStart != iEnd - 1) {
+            if (sumStart > sumEnd)
+                sumEnd += arr[--iEnd];
+            else
+                sumStart += arr[++iStart];
+        }
+        System.out.print("Result of task 6: ");
+        if (sumStart == sumEnd)
+            System.out.printf("balance on %d-%d", iStart, iEnd);
+        else
+            System.out.print("no balance");
+        System.out.println(" in " + Arrays.toString(arr));
     }
 
     private static void findMinAndMax(int[] arr) {
