@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        int[] task1 = invertArray(new int[]{1, 1, 0, 0, 1, 0, 1, 1, 0, 0});
-        System.out.println("Result of task 1: " + Arrays.toString(task1));
-        int[] task2 = getNumsMultiplesThree(8);
-        System.out.println("Result of task 2: " + Arrays.toString(task2));
+        int[] result = invertArray(new int[]{1, 1, 0, 0, 1, 0, 1, 1, 0, 0});
+        System.out.println("Result of task 1: " + Arrays.toString(result));
+        result = getNumsMultiplesThree(8);
+        System.out.println("Result of task 2: " + Arrays.toString(result));
     }
 
     private static int[] getNumsMultiplesThree(int len) {
