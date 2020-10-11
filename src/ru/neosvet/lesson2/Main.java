@@ -98,11 +98,12 @@ public class Main {
     }
 
     private static int[] increaseNums(int[] nums, int lessThan) {
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] < lessThan)
-                nums[i] *= 2;
+        int[] arr = nums.clone();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < lessThan)
+                arr[i] *= 2;
         }
-        return nums;
+        return arr;
     }
 
     private static int[] getNumsMultiplesThree(int len) {
@@ -114,10 +115,11 @@ public class Main {
     }
 
     private static int[] invertArray(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == 0 || arr[i] == 1)
-                arr[i] = (arr[i] == 0 ? 1 : 0);
+        int[] narr = arr.clone();
+        for (int i = 0; i < narr.length; i++) {
+            if (narr[i] == 0 || narr[i] == 1)
+                narr[i] = (narr[i] == 0 ? 1 : 0);
         }
-        return arr;
+        return narr;
     }
 }
