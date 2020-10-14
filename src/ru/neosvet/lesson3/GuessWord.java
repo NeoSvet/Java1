@@ -49,18 +49,18 @@ public class GuessWord {
             if (s.equals(w)) {
                 System.out.println("Молодец, вы угадали!");
                 return;
+            } else if (k == 0) {
+                System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
+                return;
             } else if (s.equals("help")) {
                 showTip();
             } else if (s.equals("exit")) {
                 System.exit(0);
-            } else if (k == 0) {
-                break;
-            } else {
+            } else { //not guess
                 showWord(w, w.length() - k);
                 k--;
             }
         }
-        System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
     }
 
     private static void showWord(String word, int len) {
