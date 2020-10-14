@@ -25,15 +25,12 @@ public class Main {
     private static int[] moveItemsInArr2(int[] arr, int step) {
         System.out.println("Array in task 7 (without addition array): " + Arrays.toString(arr));
         int ni, item1, item2, count_moved = 0, i = 0;
+        step = step % arr.length;
         while (count_moved < arr.length) {
             ni = i;
             item1 = arr[i];
             do {
-                ni = ni + step;
-                if (ni < 0)
-                    ni += arr.length;
-                else if (ni >= arr.length)
-                    ni -= arr.length;
+                ni = GetNewIndex(ni, step, arr.length);
                 item2 = arr[ni];
                 arr[ni] = item1;
                 item1 = item2;
@@ -44,16 +41,22 @@ public class Main {
         return arr;
     }
 
+    private static int GetNewIndex(int i, int step, int limit) {
+        i += step;
+        if (i < 0)
+            i += limit;
+        else if (i >= limit)
+            i -= limit;
+        return i;
+    }
+
     private static int[] moveItemsInArr(int[] arr, int step) {
         System.out.println("Array in task 7: " + Arrays.toString(arr));
         int[] narr = new int[arr.length];
         int ni;
+        step = step % arr.length;
         for (int i = 0; i < arr.length; i++) {
-            ni = i + step;
-            if (ni < 0)
-                ni += arr.length;
-            else if (ni >= arr.length)
-                ni -= arr.length;
+            ni = GetNewIndex(i, step, arr.length);
             narr[ni] = arr[i];
         }
         return narr;
