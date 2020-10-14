@@ -56,14 +56,18 @@ public class GuessWord {
             } else if (k == 0) {
                 break;
             } else {
-                System.out.print(w.substring(0, w.length() - k));
-                for (int i = w.length() - k; i < 15; i++) {
-                    System.out.print("#");
-                }
-                System.out.println();
+                showWord(w, w.length() - k);
                 k--;
             }
         }
         System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
+    }
+
+    private static void showWord(String word, int len) {
+        System.out.print(word.substring(0, len));
+        for (int i = len; i < 15; i++) {
+            System.out.print("#");
+        }
+        System.out.println();
     }
 }
