@@ -10,6 +10,7 @@ public class GuessWord {
             "cherry", "garlic", "grape", "melon", "leak", "kiwi",
             "mango", "mushroom", "nut", "olive", "pea", "peanut",
             "pear", "pepper", "pineapple", "pumpkin", "potato"};
+    private static char[] letters = new char[15];
 
     public static void main(String[] args) {
         showTip();
@@ -33,10 +34,17 @@ public class GuessWord {
     private static void launchGame() {
         Random random = new Random();
         while (true) {
+            clearLetters();
             game(random.nextInt(words.length));
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
             if (!scan.next().equals("1"))
                 break;
+        }
+    }
+
+    private static void clearLetters() {
+        for (int i = 0; i < letters.length; i++) {
+            letters[i] = '#';
         }
     }
 
@@ -62,12 +70,12 @@ public class GuessWord {
     }
 
     private static void showWord(String right_word, String entered_word) {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < letters.length; i++) {
             if (i < right_word.length() && i < entered_word.length()
-                    && right_word.charAt(i) == entered_word.charAt(i))
-                System.out.print(right_word.charAt(i));
-            else
-                System.out.print("#");
+                    && right_word.charAt(i) == entered_word.charAt(i)) {
+                letters[i] = right_word.charAt(i);
+            }
+            System.out.print(letters[i]);
         }
         System.out.println();
     }
