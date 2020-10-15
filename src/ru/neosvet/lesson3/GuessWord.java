@@ -42,15 +42,12 @@ public class GuessWord {
 
     private static void game(int n) {
         String s, w = words[n];
-        int k = w.length() - 1;
-        while (true) {
-            System.out.println("Угадайте слово!");
+        int k = 5;
+        while (k > 0) {
+            System.out.printf("Угадайте слово! (%d попытки(ка))%n", k);
             s = scan.next();
             if (s.equals(w)) {
                 System.out.println("Молодец, вы угадали!");
-                return;
-            } else if (k == 0) {
-                System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
                 return;
             } else if (s.equals("help")) {
                 showTip();
@@ -61,6 +58,7 @@ public class GuessWord {
                 k--;
             }
         }
+        System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
     }
 
     private static void showWord(String word, int len) {
