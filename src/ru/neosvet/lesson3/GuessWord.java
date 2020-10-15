@@ -50,9 +50,8 @@ public class GuessWord {
 
     private static void game(int n) {
         String s, w = words[n];
-        int k = 5;
-        while (k > 0) {
-            System.out.printf("Угадайте слово! (%d попытки(ка))%n", k);
+        while (true) {
+            System.out.println("Угадайте слово! help - справка, exit - выход");
             s = scan.next();
             if (s.equals(w)) { //win
                 System.out.println("Молодец, вы угадали!");
@@ -63,10 +62,8 @@ public class GuessWord {
                 System.exit(0);
             } else { //not win
                 showWord(w, s);
-                k--;
             }
         }
-        System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
     }
 
     private static void showWord(String right_word, String entered_word) {
