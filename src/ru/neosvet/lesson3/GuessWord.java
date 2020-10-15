@@ -46,25 +46,28 @@ public class GuessWord {
         while (k > 0) {
             System.out.printf("Угадайте слово! (%d попытки(ка))%n", k);
             s = scan.next();
-            if (s.equals(w)) {
+            if (s.equals(w)) { //win
                 System.out.println("Молодец, вы угадали!");
                 return;
             } else if (s.equals("help")) {
                 showTip();
             } else if (s.equals("exit")) {
                 System.exit(0);
-            } else { //not guess
-                showWord(w, w.length() - k);
+            } else { //not win
+                showWord(w, s);
                 k--;
             }
         }
         System.out.println("Увы, попытки исчерпаны. Было загадано " + w);
     }
 
-    private static void showWord(String word, int len) {
-        System.out.print(word.substring(0, len));
-        for (int i = len; i < 15; i++) {
-            System.out.print("#");
+    private static void showWord(String right_word, String entered_word) {
+        for (int i = 0; i < 15; i++) {
+            if (i < right_word.length() && i < entered_word.length()
+                    && right_word.charAt(i) == entered_word.charAt(i))
+                System.out.print(right_word.charAt(i));
+            else
+                System.out.print("#");
         }
         System.out.println();
     }
