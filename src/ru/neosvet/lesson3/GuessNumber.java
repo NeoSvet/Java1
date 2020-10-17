@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
+    private static final int COUNT_TRY = 3, MIN_NUMBER = 0, BOUND_NUMBER = 10;
     private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class GuessNumber {
     private static void launchGame() {
         Random random = new Random();
         while(true) {
-            game(random.nextInt(10));
+            game(random.nextInt(BOUND_NUMBER) + MIN_NUMBER);
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
             if(!scan.next().equals("1"))
                 break;
@@ -21,7 +22,7 @@ public class GuessNumber {
     }
 
     private static void game(int n) {
-        int k = 3;
+        int k = COUNT_TRY;
         while (k > 0) {
             System.out.printf("Угадайте число! (%d попытки(ка))%n", k);
             try {
