@@ -13,24 +13,28 @@ public class GuessNumber {
 
     private static void launchGame() {
         Random random = new Random();
-        while(true) {
+        while (true) {
             game(random.nextInt(BOUND_NUMBER) + MIN_NUMBER);
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
-            if(!scan.next().equals("1"))
+            if (!scan.next().equals("1"))
                 break;
         }
     }
 
     private static void game(int n) {
-        int k = COUNT_TRY;
+        int i, k = COUNT_TRY;
         while (k > 0) {
             System.out.printf("Угадайте число! (%d попытки(ка))%n", k);
             try {
-                if (scan.nextInt() == n) {
+                i = scan.nextInt();
+                if (i == n) {
                     System.out.println("Молодец, вы угадали!");
                     return;
-                } else
+                } else {
+                    System.out.printf("Ваше число %s загаданного.%n",
+                            (i < n ? "меньше" : "больше"));
                     k--;
+                }
             } catch (Exception e) {
                 System.out.println("Введите целое число!");
             }
