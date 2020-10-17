@@ -23,7 +23,7 @@ public class GuessNumber {
 
     private static void game(int n) {
         int i, k = COUNT_TRY;
-        while (k > 0) {
+        while (true) {
             System.out.printf("Угадайте число! (%d попытки(ка))%n", k);
             try {
                 i = scan.nextInt();
@@ -31,9 +31,11 @@ public class GuessNumber {
                     System.out.println("Молодец, вы угадали!");
                     return;
                 } else {
+                    k--;
+                    if (k == 0)
+                        break;
                     System.out.printf("Ваше число %s загаданного.%n",
                             (i < n ? "меньше" : "больше"));
-                    k--;
                 }
             } catch (Exception e) {
                 System.out.println("Введите целое число!");
