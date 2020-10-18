@@ -78,45 +78,37 @@ public class TicTacToe {
     }
 
     private static boolean isEndAfterHumanTurn() {
-        int rowNumber;
-        int colNumber;
-
+        int x, y;
         System.out.println("\nВведите номер строки и столбца! (0 - для выхода)");
         while (true) {
             do {
                 System.out.print("Строка: ");
-                rowNumber = scanner.nextInt();
-            } while (isNotValid(rowNumber));
+                x = scanner.nextInt() - 1;
+            } while (isNotValid(x));
 
             do {
                 System.out.print("Столбец: ");
-                colNumber = scanner.nextInt();
-            } while (isNotValid(colNumber));
+                y = scanner.nextInt() - 1;
+            } while (isNotValid(y));
 
-            if (isBusyCell(rowNumber, colNumber))
+            if (isBusyCell(x, y))
                 System.out.println("Вы выбрали занятую ячейку.");
             else
                 break;
         }
 
-        int x = rowNumber - 1;
-        int y = colNumber - 1;
         map[x][y] = human_first ? DOT_FIRST : DOT_SECOND;
         return checkEnd(x, y, true);
     }
 
     private static boolean isEndAfterAiTurn() {
-        int rowNumber;
-        int colNumber;
-
+        int x, y;
         System.out.println("\nХод компьютера!");
         do {
-            rowNumber = random.nextInt(SIZE) + 1;
-            colNumber = random.nextInt(SIZE) + 1;
-        } while (isBusyCell(rowNumber, colNumber));
+            x = random.nextInt(SIZE);
+            y = random.nextInt(SIZE);
+        } while (isBusyCell(x, y));
 
-        int x = rowNumber - 1;
-        int y = colNumber - 1;
         map[x][y] = human_first ? DOT_SECOND : DOT_FIRST;
         return checkEnd(x, y, false);
     }
@@ -131,8 +123,8 @@ public class TicTacToe {
         return false;
     }
 
-    private static boolean isBusyCell(int rowNumber, int colNumber) {
-        return map[rowNumber - 1][colNumber - 1] != DOT_EMPTY;
+    private static boolean isBusyCell(int x, int y) {
+        return map[x][y] != DOT_EMPTY;
     }
 
     private static boolean checkEnd(int x, int y, boolean isHuman) {
