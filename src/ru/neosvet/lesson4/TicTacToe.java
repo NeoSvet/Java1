@@ -116,8 +116,20 @@ public class TicTacToe {
     }
 
     private static Point getPointForAiStep() {
-        char human = human_first ? DOT_FIRST : DOT_SECOND;
         Point p;
+
+        char ai = human_first ? DOT_SECOND : DOT_FIRST;
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                if (map[x][y] == ai) {
+                    p = getPointFromCheckChance(x, y, ai);
+                    if (p != null)
+                        return p;
+                }
+            }
+        }
+
+        char human = human_first ? DOT_FIRST : DOT_SECOND;
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
                 if (map[x][y] == human) {
