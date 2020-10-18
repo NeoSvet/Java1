@@ -22,8 +22,6 @@ public class TicTacToe {
             System.out.println("Вы желаете ходить первым или вторым? 1 – первым / другое - вторым");
             human_first = scanner.next().equals("1");
             initMap();
-            if (human_first)
-                printMap();
             playGame();
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
             if (!scanner.next().equals("1"))
@@ -67,26 +65,19 @@ public class TicTacToe {
     }
 
     private static void playGame() {
-        while (true) {
-            if (human_first)
-                humanTurn();
-            else
-                aiTurn();
+        boolean isEnd;
+        boolean firstStep = true;
+        do {
             printMap();
-            if (checkEnd(DOT_FIRST))
-                break;
-
-            if (human_first)
-                aiTurn();
+            if ((human_first && firstStep) || (!human_first && !firstStep))
+                isEnd = isEndAfterHumanTurn();
             else
-                humanTurn();
-            printMap();
-            if (checkEnd(DOT_SECOND))
-                break;
-        }
+                isEnd = isEndAfterAiTurn();
+            firstStep = !firstStep;
+        } while (!isEnd);
     }
 
-    private static void humanTurn() {
+    private static boolean isEndAfterHumanTurn() {
         int rowNumber;
         int colNumber;
 
@@ -108,10 +99,13 @@ public class TicTacToe {
                 break;
         }
 
-        map[rowNumber - 1][colNumber - 1] = human_first ? DOT_FIRST : DOT_SECOND;
+        int x = rowNumber - 1;
+        int y = colNumber - 1;
+        map[x][y] = human_first ? DOT_FIRST : DOT_SECOND;
+        return checkEnd(x, y, true);
     }
 
-    private static void aiTurn() {
+    private static boolean isEndAfterAiTurn() {
         int rowNumber;
         int colNumber;
 
@@ -121,7 +115,10 @@ public class TicTacToe {
             colNumber = random.nextInt(SIZE) + 1;
         } while (isBusyCell(rowNumber, colNumber));
 
-        map[rowNumber - 1][colNumber - 1] = human_first ? DOT_SECOND : DOT_FIRST;
+        int x = rowNumber - 1;
+        int y = colNumber - 1;
+        map[x][y] = human_first ? DOT_SECOND : DOT_FIRST;
+        return checkEnd(x, y, false);
     }
 
     private static boolean isNotValid(int coord) {
@@ -138,14 +135,16 @@ public class TicTacToe {
         return map[rowNumber - 1][colNumber - 1] != DOT_EMPTY;
     }
 
-    private static boolean checkEnd(char symbol) {
-        if (checkWin(symbol)) {
-            System.out.println((symbol == DOT_FIRST && human_first) || (symbol != DOT_FIRST && !human_first)
-                    ? "УРА! Вы победили!" : "Восстание близко! AI победил");
+    private static boolean checkEnd(int x, int y, boolean isHuman) {
+        if (checkWinOnCell(x, y)) {
+            printMap();
+            System.out.println(isHuman ? "УРА! Вы победили!"
+                    : "Восстание близко! AI победил");
             return true;
         }
 
         if (isMapFull()) {
+            printMap();
             System.out.println("Ничья!");
             return true;
         }
@@ -164,19 +163,7 @@ public class TicTacToe {
         return true;
     }
 
-    private static boolean checkWin(char symbol) {
-        for (int x = 0; x < SIZE; x++) {
-            for (int y = 0; y < SIZE; y++) {
-                if (map[x][y] == symbol) {
-                    if (checkOnCell(x, y))
-                        return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkOnCell(final int x, final int y) {
+    private static boolean checkWinOnCell(final int x, final int y) {
         if (checkLine(x, y, 1, 0)) //check row
             return true;
         if (checkLine(x, y, 0, 1)) //check column
