@@ -153,6 +153,17 @@ public class TicTacToe {
         return false;
     }
 
+    private static boolean isMapFull() {
+        for (char[] chars : map) {
+            for (char aChar : chars) {
+                if (aChar == DOT_EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private static boolean checkWin(char symbol) {
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
@@ -204,17 +215,6 @@ public class TicTacToe {
         if (x > -1 && x < SIZE && y > -1 && y < SIZE)
             return map[x][y];
         return DOT_EMPTY;
-    }
-
-    private static boolean isMapFull() {
-        for (char[] chars : map) {
-            for (char aChar : chars) {
-                if (aChar == DOT_EMPTY) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 }
