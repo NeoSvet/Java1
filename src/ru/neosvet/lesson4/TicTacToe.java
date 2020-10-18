@@ -5,12 +5,13 @@ import java.util.Scanner;
 
 public class TicTacToe {
     private static final int SIZE = 3;
-    private static final char DOT_EMPTY = '•', DOT_HUMAN = 'X', DOT_AI = 'O';
+    private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
     private static char[][] map = new char[SIZE][SIZE];
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
+    private static boolean human_first;
 
     public static void main(String[] args) {
         launchGame();
@@ -18,8 +19,11 @@ public class TicTacToe {
 
     private static void launchGame() {
         while (true) {
+            System.out.println("Вы желаете ходить первым или вторым? 1 – первым / другое - вторым");
+            human_first = scanner.next().equals("1");
             initMap();
-            printMap();
+            if (human_first)
+                printMap();
             playGame();
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
             if (!scanner.next().equals("1"))
@@ -64,14 +68,20 @@ public class TicTacToe {
 
     private static void playGame() {
         while (true) {
-            humanTurn();
+            if (human_first)
+                humanTurn();
+            else
+                aiTurn();
             printMap();
-            if (checkEnd(DOT_HUMAN))
+            if (checkEnd(DOT_FIRST))
                 break;
 
-            aiTurn();
+            if (human_first)
+                aiTurn();
+            else
+                humanTurn();
             printMap();
-            if (checkEnd(DOT_AI))
+            if (checkEnd(DOT_SECOND))
                 break;
         }
     }
@@ -98,7 +108,7 @@ public class TicTacToe {
                 break;
         }
 
-        map[rowNumber - 1][colNumber - 1] = DOT_HUMAN;
+        map[rowNumber - 1][colNumber - 1] = human_first ? DOT_FIRST : DOT_SECOND;
     }
 
     private static void aiTurn() {
@@ -111,7 +121,7 @@ public class TicTacToe {
             colNumber = random.nextInt(SIZE) + 1;
         } while (isBusyCell(rowNumber, colNumber));
 
-        map[rowNumber - 1][colNumber - 1] = DOT_AI;
+        map[rowNumber - 1][colNumber - 1] = human_first ? DOT_SECOND : DOT_FIRST;
     }
 
     private static boolean isCoordValid(int coord) {
@@ -130,8 +140,8 @@ public class TicTacToe {
 
     private static boolean checkEnd(char symbol) {
         if (checkWin(symbol)) {
-            System.out.println((symbol == DOT_HUMAN ? "УРА! Вы победили!"
-                    : "Восстание близко! AI победил"));
+            System.out.println((symbol == DOT_FIRST && human_first) || (symbol != DOT_FIRST && !human_first)
+                    ? "УРА! Вы победили!" : "Восстание близко! AI победил");
             return true;
         }
 
