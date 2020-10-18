@@ -95,12 +95,12 @@ public class TicTacToe {
             do {
                 System.out.print("Строка: ");
                 rowNumber = scanner.nextInt();
-            } while (!isCoordValid(rowNumber));
+            } while (isNotValid(rowNumber));
 
             do {
                 System.out.print("Столбец: ");
                 colNumber = scanner.nextInt();
-            } while (!isCoordValid(colNumber));
+            } while (isNotValid(colNumber));
 
             if (isBusyCell(rowNumber, colNumber))
                 System.out.println("Вы выбрали занятую ячейку.");
@@ -124,14 +124,14 @@ public class TicTacToe {
         map[rowNumber - 1][colNumber - 1] = human_first ? DOT_SECOND : DOT_FIRST;
     }
 
-    private static boolean isCoordValid(int coord) {
+    private static boolean isNotValid(int coord) {
         if (coord == 0)
             System.exit(0);
         if (coord < 1 || coord > SIZE) {
             System.out.printf("Координата должна быть от 1 до %d.%n", SIZE);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private static boolean isBusyCell(int rowNumber, int colNumber) {
