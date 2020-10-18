@@ -172,7 +172,7 @@ public class TicTacToe {
     }
 
     private static boolean checkLine(final int x, final int y, Line line) {
-        char cell, symbol = map[x][y];
+        char symbol = map[x][y];
         int k = 1, i = x, j = y;
         boolean firstSide = true;
 
@@ -180,8 +180,7 @@ public class TicTacToe {
         while (true) {
             i += steps.x;
             j += steps.y;
-            cell = getCell(i, j);
-            if (cell == symbol) {
+            if (getCell(i, j) == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return true;
             } else if (firstSide) {
