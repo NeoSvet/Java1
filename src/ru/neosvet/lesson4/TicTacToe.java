@@ -145,20 +145,20 @@ public class TicTacToe {
 
     private static Point getPointFromCheckChance(int x, int y, char symbol) {
         Point p;
-        p = checkChanceLine(symbol, x, y, Line.ROW);
+        p = getPointFromCheckChanceLine(symbol, x, y, Line.ROW);
         if (p != null)
             return p;
-        p = checkChanceLine(symbol, x, y, Line.COLUMN);
+        p = getPointFromCheckChanceLine(symbol, x, y, Line.COLUMN);
         if (p != null)
             return p;
-        p = checkChanceLine(symbol, x, y, Line.DIAGONAL_ONE);
+        p = getPointFromCheckChanceLine(symbol, x, y, Line.DIAGONAL_ONE);
         if (p != null)
             return p;
-        p = checkChanceLine(symbol, x, y, Line.DIAGONAL_TWO);
+        p = getPointFromCheckChanceLine(symbol, x, y, Line.DIAGONAL_TWO);
         return p;
     }
 
-    private static Point checkChanceLine(char symbol, int x, int y, Line line) {
+    private static Point getPointFromCheckChanceLine(char symbol, int x, int y, Line line) {
         char cell;
         int k = 1, i = x, j = y;
         boolean firstSide = true;
