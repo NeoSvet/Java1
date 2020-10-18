@@ -177,13 +177,13 @@ public class TicTacToe {
     }
 
     private static boolean checkOnCell(final int x, final int y) {
-        if (checkLine(x, y, 1, 0))
+        if (checkLine(x, y, 1, 0)) //check row
             return true;
-        if (checkLine(x, y, 0, 1))
+        if (checkLine(x, y, 0, 1)) //check column
             return true;
-        if (checkLine(x, y, 1, 1))
+        if (checkLine(x, y, 1, 1)) //check first diagonal
             return true;
-        if (checkLine(x, y, 1, -1))
+        if (checkLine(x, y, 1, -1)) //check second diagonal
             return true;
 
         return false;
