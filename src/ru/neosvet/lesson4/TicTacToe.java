@@ -189,7 +189,7 @@ public class TicTacToe {
         return false;
     }
 
-    private static boolean checkLine(int x, int y, int step_x, int step_y) {
+    private static boolean checkLine(final int x, final int y, int step_x, int step_y) {
         char cell, symbol = map[x][y];
         int k = 1, i = x, j = y;
         boolean firstSide = true;
