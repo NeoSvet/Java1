@@ -162,7 +162,7 @@ public class TicTacToe {
         if (map[0][1] == symbol && map[1][1] == symbol && map[2][1] == symbol) return true;
         if (map[0][2] == symbol && map[1][2] == symbol && map[2][2] == symbol) return true;
 
-        if (map[0][2] == symbol && map[1][1] == symbol && map[2][2] == symbol) return true;
+        if (map[0][0] == symbol && map[1][1] == symbol && map[2][2] == symbol) return true;
         if (map[0][2] == symbol && map[1][1] == symbol && map[2][0] == symbol) return true;
 
         return false;
