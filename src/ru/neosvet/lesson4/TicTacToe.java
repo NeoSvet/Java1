@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private static final int SIZE = 3;
+    private static final int SIZE = 3, LINE_FOR_WIN = 3;
     private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
@@ -154,18 +154,56 @@ public class TicTacToe {
     }
 
     private static boolean checkWin(char symbol) {
-        if (map[0][0] == symbol && map[0][1] == symbol && map[0][2] == symbol) return true;
-        if (map[1][0] == symbol && map[1][1] == symbol && map[1][2] == symbol) return true;
-        if (map[2][0] == symbol && map[2][1] == symbol && map[2][2] == symbol) return true;
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                if (map[x][y] == symbol) {
+                    if (checkOnCell(x, y))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
 
-        if (map[0][0] == symbol && map[1][0] == symbol && map[2][0] == symbol) return true;
-        if (map[0][1] == symbol && map[1][1] == symbol && map[2][1] == symbol) return true;
-        if (map[0][2] == symbol && map[1][2] == symbol && map[2][2] == symbol) return true;
-
-        if (map[0][0] == symbol && map[1][1] == symbol && map[2][2] == symbol) return true;
-        if (map[0][2] == symbol && map[1][1] == symbol && map[2][0] == symbol) return true;
+    private static boolean checkOnCell(final int x, final int y) {
+        if (checkLine(x, y, 1, 0))
+            return true;
+        if (checkLine(x, y, 0, 1))
+            return true;
+        if (checkLine(x, y, 1, 1))
+            return true;
+        if (checkLine(x, y, 1, -1))
+            return true;
 
         return false;
+    }
+
+    private static boolean checkLine(int x, int y, int step_x, int step_y) {
+        char cell, symbol = map[x][y];
+        int k = 1, i = x, j = y;
+        boolean firstSide = true;
+        while (true) {
+            i += step_x;
+            j += step_y;
+            cell = getCell(i, j);
+            if (cell == symbol) {
+                if (++k == LINE_FOR_WIN)
+                    return true;
+            } else if (firstSide) {
+                firstSide = false;
+                step_x = step_x * -1;
+                step_y = step_y * -1;
+                i = x;
+                j = y;
+            } else
+                return false;
+        }
+    }
+
+    private static char getCell(int x, int y) {
+        if (x > -1 && x < SIZE && y > -1 && y < SIZE)
+            return map[x][y];
+        return DOT_EMPTY;
     }
 
     private static boolean isMapFull() {
