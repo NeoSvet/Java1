@@ -4,32 +4,27 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
+    private static final int SIZE = 3;
+    private static final char DOT_EMPTY = '•', DOT_HUMAN = 'X', DOT_AI = 'O';
+    private static final String EMPTY = " ";
 
-    static final int SIZE = 3;
-
-
-    static final char DOT_EMPTY = '•';
-    static final char DOT_HUMAN = 'X';
-    static final char DOT_AI = 'O';
-
-    static final String HEADER_FIRST_EMPTY = "♥";
-    static final String EMPTY = " ";
-
-
-    static char[][] map = new char[SIZE][SIZE];
-    static Scanner scanner = new Scanner(System.in);
-    static Random random = new Random();
-
+    private static char[][] map = new char[SIZE][SIZE];
+    private static Scanner scanner = new Scanner(System.in);
+    private static Random random = new Random();
 
     public static void main(String[] args) {
-        turnGame();
-
+        launchGame();
     }
 
-    private static void turnGame() {
-        initMap();
-        printMap();
-        playGame();
+    private static void launchGame() {
+        while (true) {
+            initMap();
+            printMap();
+            playGame();
+            System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
+            if (!scanner.next().equals("1"))
+                break;
+        }
     }
 
     private static void initMap() {
@@ -46,7 +41,7 @@ public class TicTacToe {
     }
 
     private static void printMapHeader() {
-        System.out.print(HEADER_FIRST_EMPTY + EMPTY);
+        System.out.print(EMPTY + EMPTY);
         for (int i = 0; i < SIZE; i++) {
             printMapNumber(i);
         }
@@ -67,18 +62,17 @@ public class TicTacToe {
         }
     }
 
-
     private static void playGame() {
-
         while (true) {
             humanTurn();
             printMap();
-            checkEnd(DOT_HUMAN);
-
+            if (checkEnd(DOT_HUMAN))
+                break;
 
             aiTurn();
             printMap();
-            checkEnd(DOT_AI);
+            if (checkEnd(DOT_AI))
+                break;
         }
     }
 
@@ -86,64 +80,67 @@ public class TicTacToe {
         int rowNumber;
         int colNumber;
 
-        System.out.println("\nХод человека! Введите номер строки и столбца!");
-        do {
-            System.out.print("Строка = ");
-            rowNumber = scanner.nextInt();
-            System.out.print("Столбец = ");
-            colNumber = scanner.nextInt();
-        } while (!isCellValid(rowNumber, colNumber));
+        System.out.println("\nВведите номер строки и столбца! (0 - для выхода)");
+        while (true) {
+            do {
+                System.out.print("Строка: ");
+                rowNumber = scanner.nextInt();
+            } while (!isCoordValid(rowNumber));
+
+            do {
+                System.out.print("Столбец: ");
+                colNumber = scanner.nextInt();
+            } while (!isCoordValid(colNumber));
+
+            if (isBusyCell(rowNumber, colNumber))
+                System.out.println("Вы выбрали занятую ячейку.");
+            else
+                break;
+        }
 
         map[rowNumber - 1][colNumber - 1] = DOT_HUMAN;
     }
 
-    private static boolean isCellValid(int rowNumber, int colNumber, boolean isAI) {
+    private static void aiTurn() {
+        int rowNumber;
+        int colNumber;
 
-        if (!isAI && ((rowNumber < 1) || (rowNumber > SIZE) || (colNumber < 1) || (colNumber > SIZE))) {
-            System.out.println("\nПроверьте значения строки и столбца");
+        System.out.println("\nХод компьютера!");
+        do {
+            rowNumber = random.nextInt(SIZE) + 1;
+            colNumber = random.nextInt(SIZE) + 1;
+        } while (isBusyCell(rowNumber, colNumber));
+
+        map[rowNumber - 1][colNumber - 1] = DOT_AI;
+    }
+
+    private static boolean isCoordValid(int coord) {
+        if (coord == 0)
+            System.exit(0);
+        if (coord < 1 || coord > SIZE) {
+            System.out.printf("Координата должна быть от 1 до %d.%n", SIZE);
             return false;
         }
-
-        if (map[rowNumber - 1][colNumber - 1] != DOT_EMPTY) {
-            if (!isAI) {
-                System.out.println("\nВы выбрали занятую ячейку");
-            }
-            return false;
-        }
-
         return true;
     }
 
-    private static boolean isCellValid(int rowNumber, int colNumber) {
-        return isCellValid(rowNumber, colNumber, false);
+    private static boolean isBusyCell(int rowNumber, int colNumber) {
+        return map[rowNumber - 1][colNumber - 1] != DOT_EMPTY;
     }
 
-    private static void checkEnd(char symbol) {
-
-        boolean isEnd = false;
-
-        if(checkWin(symbol)) {
-            String winMessage;
-
-            if(symbol == DOT_HUMAN) {
-                winMessage = "УРА! Вы победили!";
-            }
-            else {
-                winMessage = "Восстание близко! AI победил";
-            }
-
-            isEnd = true;
-            System.out.println(winMessage);
+    private static boolean checkEnd(char symbol) {
+        if (checkWin(symbol)) {
+            System.out.println((symbol == DOT_HUMAN ? "УРА! Вы победили!"
+                    : "Восстание близко! AI победил"));
+            return true;
         }
 
-        if(!isEnd && isMapFull()) {
+        if (isMapFull()) {
             System.out.println("Ничья!");
-            isEnd = true;
+            return true;
         }
 
-        if(isEnd) {
-            System.exit(0);
-        }
+        return false;
     }
 
     private static boolean checkWin(char symbol) {
@@ -164,25 +161,12 @@ public class TicTacToe {
     private static boolean isMapFull() {
         for (char[] chars : map) {
             for (char aChar : chars) {
-                if(aChar == DOT_EMPTY) {
+                if (aChar == DOT_EMPTY) {
                     return false;
                 }
             }
         }
         return true;
-    }
-
-
-    private static void aiTurn() {
-        int rowNumber;
-        int colNumber;
-        System.out.println("\nХод компьютера!\n");
-        do {
-            rowNumber = random.nextInt(SIZE) + 1;
-            colNumber = random.nextInt(SIZE) + 1;
-        } while (!isCellValid(rowNumber, colNumber, true));
-
-        map[rowNumber - 1][colNumber - 1] = DOT_AI;
     }
 
 }
