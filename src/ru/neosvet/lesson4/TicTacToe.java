@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private static final int SIZE = 5, LINE_FOR_WIN = 3;
+    private static final int SIZE = 5, LINE_FOR_WIN = 3, COORD_FOR_EXIT = -1;;
     private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
@@ -114,9 +114,9 @@ public class TicTacToe {
     }
 
     private static boolean isNotValid(int coord) {
-        if (coord == 0)
+        if (coord == COORD_FOR_EXIT)
             System.exit(0);
-        if (coord < 1 || coord > SIZE) {
+        if (coord < 0 || coord >= SIZE) {
             System.out.printf("Координата должна быть от 1 до %d.%n", SIZE);
             return true;
         }
