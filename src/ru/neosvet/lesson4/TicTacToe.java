@@ -1,10 +1,13 @@
 package ru.neosvet.lesson4;
 
+import java.awt.Point;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private static final int SIZE = 5, LINE_FOR_WIN = 3, COORD_FOR_EXIT = -1;;
+    enum Line { ROW, COLUMN, DIAGONAL_ONE, DIAGONAL_TWO }
+
+    private static final int SIZE = 5, LINE_FOR_WIN = 3, COORD_FOR_EXIT = -1;
     private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
@@ -156,37 +159,52 @@ public class TicTacToe {
     }
 
     private static boolean checkWinOnCell(final int x, final int y) {
-        if (checkLine(x, y, 1, 0)) //check row
+        if (checkLine(x, y, Line.ROW))
             return true;
-        if (checkLine(x, y, 0, 1)) //check column
+        if (checkLine(x, y, Line.COLUMN))
             return true;
-        if (checkLine(x, y, 1, 1)) //check first diagonal
+        if (checkLine(x, y, Line.DIAGONAL_ONE))
             return true;
-        if (checkLine(x, y, 1, -1)) //check second diagonal
+        if (checkLine(x, y, Line.DIAGONAL_TWO))
             return true;
 
         return false;
     }
 
-    private static boolean checkLine(final int x, final int y, int step_x, int step_y) {
+    private static boolean checkLine(final int x, final int y, Line line) {
         char cell, symbol = map[x][y];
         int k = 1, i = x, j = y;
         boolean firstSide = true;
+
+        Point steps = getSteps(line);
         while (true) {
-            i += step_x;
-            j += step_y;
+            i += steps.x;
+            j += steps.y;
             cell = getCell(i, j);
             if (cell == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return true;
             } else if (firstSide) {
                 firstSide = false;
-                step_x = step_x * -1;
-                step_y = step_y * -1;
+                steps.x = steps.x * -1;
+                steps.y = steps.y * -1;
                 i = x;
                 j = y;
             } else
                 return false;
+        }
+    }
+
+    private static Point getSteps(Line line) {
+        switch (line) {
+            case ROW:
+                return new Point(1 , 0);
+            case COLUMN:
+                return new Point(0 , 1);
+            case DIAGONAL_ONE:
+                return new Point(1 , 1);
+            default: //case DIAGONAL_TWO:
+                return new Point(1 , -1);
         }
     }
 
