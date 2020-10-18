@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    private static final int SIZE = 3, LINE_FOR_WIN = 3;
+    private static final int SIZE = 5, LINE_FOR_WIN = 3;
     private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
