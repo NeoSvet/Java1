@@ -15,7 +15,6 @@ public class TicTacToe {
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
     private static boolean human_first;
-    private static Point pointAi;
 
     public static void main(String[] args) {
         launchGame();
@@ -118,11 +117,13 @@ public class TicTacToe {
 
     private static Point getPointForAiStep() {
         char human = human_first ? DOT_FIRST : DOT_SECOND;
+        Point p;
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
                 if (map[x][y] == human) {
-                    if (checkChance(x, y, human))
-                        return pointAi;
+                    p = getPointFromCheckChance(x, y, human);
+                    if (p != null)
+                        return p;
                 }
             }
         }
@@ -130,24 +131,27 @@ public class TicTacToe {
         return new Point(random.nextInt(SIZE), random.nextInt(SIZE));
     }
 
-    private static boolean checkChance(int x, int y, char symbol) {
-        if (checkChanceLine(symbol, x, y, Line.ROW))
-            return true;
-        if (checkChanceLine(symbol, x, y, Line.COLUMN))
-            return true;
-        if (checkChanceLine(symbol, x, y, Line.DIAGONAL_ONE))
-            return true;
-        if (checkChanceLine(symbol, x, y, Line.DIAGONAL_TWO))
-            return true;
-
-        return false;
+    private static Point getPointFromCheckChance(int x, int y, char symbol) {
+        Point p;
+        p = checkChanceLine(symbol, x, y, Line.ROW);
+        if (p != null)
+            return p;
+        p = checkChanceLine(symbol, x, y, Line.COLUMN);
+        if (p != null)
+            return p;
+        p = checkChanceLine(symbol, x, y, Line.DIAGONAL_ONE);
+        if (p != null)
+            return p;
+        p = checkChanceLine(symbol, x, y, Line.DIAGONAL_TWO);
+        return p;
     }
 
-    private static boolean checkChanceLine(char symbol, int x, int y, Line line) {
+    private static Point checkChanceLine(char symbol, int x, int y, Line line) {
         char cell;
         int k = 1, i = x, j = y;
         boolean firstSide = true;
         boolean hasEmpty = false;
+        Point p = null;
 
         Point steps = getSteps(line);
         while (true) {
@@ -156,7 +160,7 @@ public class TicTacToe {
             cell = getCell(i, j);
             if (cell == symbol) {
                 if (++k == LINE_FOR_WIN)
-                    return true;
+                    return p;
             } else if (firstSide && (cell != DOT_EMPTY || hasEmpty)) {
                 firstSide = false;
                 steps.x = steps.x * -1;
@@ -166,14 +170,14 @@ public class TicTacToe {
             } else if (cell == DOT_EMPTY) {
                 if (hasEmpty)
                     break;
-                pointAi = new Point(i, j);
+                p = new Point(i, j);
                 if (++k == LINE_FOR_WIN)
-                    return true;
+                    return p;
                 hasEmpty = true;
             } else
                 break;
         }
-        return false;
+        return null;
     }
 
     private static boolean isNotValid(int coord) {
