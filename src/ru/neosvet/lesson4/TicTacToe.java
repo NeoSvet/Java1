@@ -1,20 +1,21 @@
 package ru.neosvet.lesson4;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-    enum Line { ROW, COLUMN, DIAGONAL_ONE, DIAGONAL_TWO }
+    enum Line {ROW, COLUMN, DIAGONAL_ONE, DIAGONAL_TWO}
 
     private static final int SIZE = 5, LINE_FOR_WIN = 3, COORD_FOR_EXIT = -1;
-    private static final char DOT_EMPTY = '•', DOT_FIRST = 'X', DOT_SECOND = 'O';
+    private static final char DOT_EMPTY = '•', DOT_NULL = 'n', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
     private static char[][] map = new char[SIZE][SIZE];
     private static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
     private static boolean human_first;
+    private static Point pointAi;
 
     public static void main(String[] args) {
         launchGame();
@@ -105,15 +106,74 @@ public class TicTacToe {
     }
 
     private static boolean isEndAfterAiTurn() {
-        int x, y;
+        Point p;
         System.out.println("\nХод компьютера!");
         do {
-            x = random.nextInt(SIZE);
-            y = random.nextInt(SIZE);
-        } while (isBusyCell(x, y));
+            p = getPointForAiStep();
+        } while (isBusyCell(p.x, p.y));
 
-        map[x][y] = human_first ? DOT_SECOND : DOT_FIRST;
-        return checkEnd(x, y, false);
+        map[p.x][p.y] = human_first ? DOT_SECOND : DOT_FIRST;
+        return checkEnd(p.x, p.y, false);
+    }
+
+    private static Point getPointForAiStep() {
+        char human = human_first ? DOT_FIRST : DOT_SECOND;
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                if (map[x][y] == human) {
+                    if (checkChance(x, y, human))
+                        return pointAi;
+                }
+            }
+        }
+
+        return new Point(random.nextInt(SIZE), random.nextInt(SIZE));
+    }
+
+    private static boolean checkChance(int x, int y, char symbol) {
+        if (checkChanceLine(symbol, x, y, Line.ROW))
+            return true;
+        if (checkChanceLine(symbol, x, y, Line.COLUMN))
+            return true;
+        if (checkChanceLine(symbol, x, y, Line.DIAGONAL_ONE))
+            return true;
+        if (checkChanceLine(symbol, x, y, Line.DIAGONAL_TWO))
+            return true;
+
+        return false;
+    }
+
+    private static boolean checkChanceLine(char symbol, int x, int y, Line line) {
+        char cell;
+        int k = 1, i = x, j = y;
+        boolean firstSide = true;
+        boolean hasEmpty = false;
+
+        Point steps = getSteps(line);
+        while (true) {
+            i += steps.x;
+            j += steps.y;
+            cell = getCell(i, j);
+            if (cell == symbol) {
+                if (++k == LINE_FOR_WIN)
+                    return true;
+            } else if (firstSide && (cell != DOT_EMPTY || hasEmpty)) {
+                firstSide = false;
+                steps.x = steps.x * -1;
+                steps.y = steps.y * -1;
+                i = x;
+                j = y;
+            } else if (cell == DOT_EMPTY) {
+                if (hasEmpty)
+                    break;
+                pointAi = new Point(i, j);
+                if (++k == LINE_FOR_WIN)
+                    return true;
+                hasEmpty = true;
+            } else
+                break;
+        }
+        return false;
     }
 
     private static boolean isNotValid(int coord) {
@@ -197,20 +257,20 @@ public class TicTacToe {
     private static Point getSteps(Line line) {
         switch (line) {
             case ROW:
-                return new Point(1 , 0);
+                return new Point(1, 0);
             case COLUMN:
-                return new Point(0 , 1);
+                return new Point(0, 1);
             case DIAGONAL_ONE:
-                return new Point(1 , 1);
+                return new Point(1, 1);
             default: //case DIAGONAL_TWO:
-                return new Point(1 , -1);
+                return new Point(1, -1);
         }
     }
 
     private static char getCell(int x, int y) {
         if (x > -1 && x < SIZE && y > -1 && y < SIZE)
             return map[x][y];
-        return DOT_EMPTY;
+        return DOT_NULL;
     }
 
 }
