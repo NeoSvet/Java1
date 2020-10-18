@@ -119,28 +119,30 @@ public class TicTacToe {
         Point p;
 
         char ai = human_first ? DOT_SECOND : DOT_FIRST;
-        for (int x = 0; x < SIZE; x++) {
-            for (int y = 0; y < SIZE; y++) {
-                if (map[x][y] == ai) {
-                    p = getPointFromCheckChance(x, y, ai);
-                    if (p != null)
-                        return p;
-                }
-            }
-        }
+        p = getPointFromCheckChance(ai);
+        if (p != null)
+            return p;
 
         char human = human_first ? DOT_FIRST : DOT_SECOND;
+        p = getPointFromCheckChance(human);
+        if (p != null)
+            return p;
+
+        return new Point(random.nextInt(SIZE), random.nextInt(SIZE));
+    }
+
+    private static Point getPointFromCheckChance(char symbol) {
+        Point p;
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
-                if (map[x][y] == human) {
-                    p = getPointFromCheckChance(x, y, human);
+                if (map[x][y] == symbol) {
+                    p = getPointFromCheckChance(x, y, symbol);
                     if (p != null)
                         return p;
                 }
             }
         }
-
-        return new Point(random.nextInt(SIZE), random.nextInt(SIZE));
+        return null;
     }
 
     private static Point getPointFromCheckChance(int x, int y, char symbol) {
