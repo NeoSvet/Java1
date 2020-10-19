@@ -268,13 +268,13 @@ public class TicTacToe {
     private static Steps getSteps(Line line) {
         switch (line) {
             case ROW:
-                return new Steps(Steps.Direction.UP, Steps.Direction.NONE);
+                return new Steps(Direction.UP, Direction.NONE);
             case COLUMN:
-                return new Steps(Steps.Direction.NONE, Steps.Direction.UP);
+                return new Steps(Direction.NONE, Direction.UP);
             case DIAGONAL_ONE:
-                return new Steps(Steps.Direction.UP, Steps.Direction.UP);
+                return new Steps(Direction.UP, Direction.UP);
             default: //case DIAGONAL_TWO:
-                return new Steps(Steps.Direction.UP, Steps.Direction.DOWN);
+                return new Steps(Direction.UP, Direction.DOWN);
         }
     }
 
