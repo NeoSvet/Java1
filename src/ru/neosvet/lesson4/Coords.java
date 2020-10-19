@@ -36,6 +36,9 @@ public class Coords {
     }
 
     public Coords clone() {
-        return new Coords(x, y);
+        if (exists)
+            return new Coords(x, y);
+        else
+            return new Coords();
     }
 }
