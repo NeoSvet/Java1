@@ -186,7 +186,7 @@ public class TicTacToe {
             } else
                 break;
         }
-        return result;
+        return new Coords();
     }
 
     private static boolean isNotValid(int coord) {
