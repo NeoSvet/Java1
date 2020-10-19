@@ -105,35 +105,35 @@ public class TicTacToe {
         Coords coords;
         System.out.println("\nХод компьютера!");
         do {
-            coords = getPointForAiStep();
+            coords = getCoordsForAiStep();
         } while (isBusyCell(coords));
 
         map[coords.getX()][coords.getY()] = human_first ? DOT_SECOND : DOT_FIRST;
         return checkEnd(coords, false);
     }
 
-    private static Coords getPointForAiStep() {
+    private static Coords getCoordsForAiStep() {
         Coords coords;
 
         char ai = human_first ? DOT_SECOND : DOT_FIRST;
-        coords = getPointFromCheckChance(ai);
+        coords = getCoordsFromCheckChance(ai);
         if (coords.isExists())
             return coords;
 
         char human = human_first ? DOT_FIRST : DOT_SECOND;
-        coords = getPointFromCheckChance(human);
+        coords = getCoordsFromCheckChance(human);
         if (coords.isExists())
             return coords;
 
         return new Coords(random.nextInt(SIZE), random.nextInt(SIZE));
     }
 
-    private static Coords getPointFromCheckChance(char symbol) {
+    private static Coords getCoordsFromCheckChance(char symbol) {
         Coords coords = new Coords();
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
                 if (map[x][y] == symbol) {
-                    coords = getPointFromCheckChance(x, y, symbol);
+                    coords = getCoordsFromCheckChance(x, y, symbol);
                     if (coords.isExists())
                         return coords;
                 }
@@ -142,22 +142,22 @@ public class TicTacToe {
         return coords;
     }
 
-    private static Coords getPointFromCheckChance(int x, int y, char symbol) {
+    private static Coords getCoordsFromCheckChance(int x, int y, char symbol) {
         Coords result, coords = new Coords(x, y);
-        result = getPointFromCheckChanceLine(symbol, coords, Line.ROW);
+        result = getCoordsFromCheckChanceLine(symbol, coords, Line.ROW);
         if (result.isExists())
             return result;
-        result = getPointFromCheckChanceLine(symbol, coords, Line.COLUMN);
+        result = getCoordsFromCheckChanceLine(symbol, coords, Line.COLUMN);
         if (result.isExists())
             return result;
-        result = getPointFromCheckChanceLine(symbol, coords, Line.DIAGONAL_ONE);
+        result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_ONE);
         if (result.isExists())
             return result;
-        result = getPointFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
+        result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
         return result;
     }
 
-    private static Coords getPointFromCheckChanceLine(char symbol, Coords source, Line line) {
+    private static Coords getCoordsFromCheckChanceLine(char symbol, Coords source, Line line) {
         char cell;
         boolean firstSide = true;
         boolean hasEmpty = false;
