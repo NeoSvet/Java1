@@ -13,7 +13,7 @@ public class Steps {
     public int getOnX() {
         if (onX == Direction.UP)
             return 1;
-        else if (onX == Direction.DOWN)
+        if (onX == Direction.DOWN)
             return -1;
         return 0;
     }
@@ -21,7 +21,7 @@ public class Steps {
     public int getOnY() {
         if (onY == Direction.UP)
             return 1;
-        else if (onY == Direction.DOWN)
+        if (onY == Direction.DOWN)
             return -1;
         return 0;
     }
@@ -34,7 +34,7 @@ public class Steps {
     private Direction invert(Direction direction) {
         if (direction == Direction.UP)
             return Direction.DOWN;
-        else if (direction == Direction.DOWN)
+        if (direction == Direction.DOWN)
             return Direction.UP;
         return direction;
     }
