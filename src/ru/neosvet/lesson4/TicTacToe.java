@@ -1,6 +1,5 @@
 package ru.neosvet.lesson4;
 
-import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -166,7 +165,7 @@ public class TicTacToe {
         Coords coords = source.clone();
         int k = 1;
 
-        Point steps = getSteps(line);
+        Steps steps = getSteps(line);
         while (true) {
             coords.putSteps(steps);
             cell = getCell(coords);
@@ -175,8 +174,7 @@ public class TicTacToe {
                     return result;
             } else if (firstSide && (cell != DOT_EMPTY || hasEmpty)) {
                 firstSide = false;
-                steps.x = steps.x * -1;
-                steps.y = steps.y * -1;
+                steps.invert();
                 coords = source.clone();
             } else if (cell == DOT_EMPTY) {
                 if (hasEmpty)
@@ -253,7 +251,7 @@ public class TicTacToe {
         boolean firstSide = true;
         int k = 1;
 
-        Point steps = getSteps(line);
+        Steps steps = getSteps(line);
         while (true) {
             coords.putSteps(steps);
             if (getCell(coords) == symbol) {
@@ -261,29 +259,28 @@ public class TicTacToe {
                     return true;
             } else if (firstSide) {
                 firstSide = false;
-                steps.x = steps.x * -1;
-                steps.y = steps.y * -1;
+                steps.invert();
                 coords = source.clone();
             } else
                 return false;
         }
     }
 
-    private static Point getSteps(Line line) {
+    private static Steps getSteps(Line line) {
         switch (line) {
             case ROW:
-                return new Point(1, 0);
+                return new Steps(Steps.Direction.UP, Steps.Direction.NONE);
             case COLUMN:
-                return new Point(0, 1);
+                return new Steps(Steps.Direction.NONE, Steps.Direction.UP);
             case DIAGONAL_ONE:
-                return new Point(1, 1);
+                return new Steps(Steps.Direction.UP, Steps.Direction.UP);
             default: //case DIAGONAL_TWO:
-                return new Point(1, -1);
+                return new Steps(Steps.Direction.UP, Steps.Direction.DOWN);
         }
     }
 
     private static char getCell(Coords coords) {
-      if(coords.isValid(SIZE - 1))
+        if (coords.isValid(SIZE - 1))
             return map[coords.getX()][coords.getY()];
         return DOT_NULL;
     }
