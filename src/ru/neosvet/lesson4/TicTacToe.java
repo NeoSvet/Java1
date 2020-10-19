@@ -101,97 +101,97 @@ public class TicTacToe {
         }
 
         map[x][y] = human_first ? DOT_FIRST : DOT_SECOND;
-        return checkEnd(x, y, true);
+        return checkEnd(new Coords(x, y), true);
     }
 
     private static boolean isEndAfterAiTurn() {
-        Point p;
+        Coords coords;
         System.out.println("\nХод компьютера!");
         do {
-            p = getPointForAiStep();
-        } while (isBusyCell(p.x, p.y));
+            coords = getPointForAiStep();
+        } while (isBusyCell(coords));
 
-        map[p.x][p.y] = human_first ? DOT_SECOND : DOT_FIRST;
-        return checkEnd(p.x, p.y, false);
+        map[coords.getX()][coords.getY()] = human_first ? DOT_SECOND : DOT_FIRST;
+        return checkEnd(coords, false);
     }
 
-    private static Point getPointForAiStep() {
-        Point p;
+    private static Coords getPointForAiStep() {
+        Coords coords;
 
         char ai = human_first ? DOT_SECOND : DOT_FIRST;
-        p = getPointFromCheckChance(ai);
-        if (p != null)
-            return p;
+        coords = getPointFromCheckChance(ai);
+        if (coords.isExists())
+            return coords;
 
         char human = human_first ? DOT_FIRST : DOT_SECOND;
-        p = getPointFromCheckChance(human);
-        if (p != null)
-            return p;
+        coords = getPointFromCheckChance(human);
+        if (coords.isExists())
+            return coords;
 
-        return new Point(random.nextInt(SIZE), random.nextInt(SIZE));
+        return new Coords(random.nextInt(SIZE), random.nextInt(SIZE));
     }
 
-    private static Point getPointFromCheckChance(char symbol) {
-        Point p;
+    private static Coords getPointFromCheckChance(char symbol) {
+        Coords coords = new Coords();
         for (int x = 0; x < SIZE; x++) {
             for (int y = 0; y < SIZE; y++) {
                 if (map[x][y] == symbol) {
-                    p = getPointFromCheckChance(x, y, symbol);
-                    if (p != null)
-                        return p;
+                    coords = getPointFromCheckChance(x, y, symbol);
+                    if (coords.isExists())
+                        return coords;
                 }
             }
         }
-        return null;
+        return coords;
     }
 
-    private static Point getPointFromCheckChance(int x, int y, char symbol) {
-        Point p;
-        p = getPointFromCheckChanceLine(symbol, x, y, Line.ROW);
-        if (p != null)
-            return p;
-        p = getPointFromCheckChanceLine(symbol, x, y, Line.COLUMN);
-        if (p != null)
-            return p;
-        p = getPointFromCheckChanceLine(symbol, x, y, Line.DIAGONAL_ONE);
-        if (p != null)
-            return p;
-        p = getPointFromCheckChanceLine(symbol, x, y, Line.DIAGONAL_TWO);
-        return p;
+    private static Coords getPointFromCheckChance(int x, int y, char symbol) {
+        Coords result, coords = new Coords(x, y);
+        result = getPointFromCheckChanceLine(symbol, coords, Line.ROW);
+        if (result.isExists())
+            return result;
+        result = getPointFromCheckChanceLine(symbol, coords, Line.COLUMN);
+        if (result.isExists())
+            return result;
+        result = getPointFromCheckChanceLine(symbol, coords, Line.DIAGONAL_ONE);
+        if (result.isExists())
+            return result;
+        result = getPointFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
+        return result;
     }
 
-    private static Point getPointFromCheckChanceLine(char symbol, int x, int y, Line line) {
+    private static Coords getPointFromCheckChanceLine(char symbol, Coords coords, Line line) {
         char cell;
-        int k = 1, i = x, j = y;
+        int k = 1, x = coords.getX(), y = coords.getY();
         boolean firstSide = true;
         boolean hasEmpty = false;
-        Point p = null;
+        Coords result = new Coords();
 
         Point steps = getSteps(line);
         while (true) {
-            i += steps.x;
-            j += steps.y;
-            cell = getCell(i, j);
+            x += steps.x;
+            y += steps.y;
+            cell = getCell(new Coords(x, y));
             if (cell == symbol) {
                 if (++k == LINE_FOR_WIN)
-                    return p;
+                    return result;
             } else if (firstSide && (cell != DOT_EMPTY || hasEmpty)) {
                 firstSide = false;
                 steps.x = steps.x * -1;
                 steps.y = steps.y * -1;
-                i = x;
-                j = y;
+                x = coords.getX();
+                y = coords.getY();
             } else if (cell == DOT_EMPTY) {
                 if (hasEmpty)
                     break;
-                p = new Point(i, j);
+                result = new Coords(x, y);
                 if (++k == LINE_FOR_WIN)
-                    return p;
+                    return result;
                 hasEmpty = true;
             } else
                 break;
         }
-        return null;
+        return result;
     }
 
     private static boolean isNotValid(int coord) {
@@ -204,12 +204,16 @@ public class TicTacToe {
         return false;
     }
 
+    private static boolean isBusyCell(Coords coords) {
+        return isBusyCell(coords.getX(), coords.getY());
+    }
+
     private static boolean isBusyCell(int x, int y) {
         return map[x][y] != DOT_EMPTY;
     }
 
-    private static boolean checkEnd(int x, int y, boolean isHuman) {
-        if (checkWinOnCell(x, y)) {
+    private static boolean checkEnd(Coords coords, boolean isHuman) {
+        if (checkWinOnCell(coords)) {
             printMap();
             System.out.println(isHuman ? "УРА! Вы победили!"
                     : "Восстание близко! AI победил");
@@ -236,37 +240,37 @@ public class TicTacToe {
         return true;
     }
 
-    private static boolean checkWinOnCell(final int x, final int y) {
-        if (checkLine(x, y, Line.ROW))
+    private static boolean checkWinOnCell(Coords coords) {
+        if (checkLine(coords, Line.ROW))
             return true;
-        if (checkLine(x, y, Line.COLUMN))
+        if (checkLine(coords, Line.COLUMN))
             return true;
-        if (checkLine(x, y, Line.DIAGONAL_ONE))
+        if (checkLine(coords, Line.DIAGONAL_ONE))
             return true;
-        if (checkLine(x, y, Line.DIAGONAL_TWO))
+        if (checkLine(coords, Line.DIAGONAL_TWO))
             return true;
 
         return false;
     }
 
-    private static boolean checkLine(final int x, final int y, Line line) {
+    private static boolean checkLine(Coords coords, Line line) {
+        int k = 1, x = coords.getX(), y = coords.getY();
         char symbol = map[x][y];
-        int k = 1, i = x, j = y;
         boolean firstSide = true;
 
         Point steps = getSteps(line);
         while (true) {
-            i += steps.x;
-            j += steps.y;
-            if (getCell(i, j) == symbol) {
+            x += steps.x;
+            y += steps.y;
+            if (getCell(new Coords(x, y)) == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return true;
             } else if (firstSide) {
                 firstSide = false;
                 steps.x = steps.x * -1;
                 steps.y = steps.y * -1;
-                i = x;
-                j = y;
+                x = coords.getX();
+                y = coords.getY();
             } else
                 return false;
         }
@@ -285,9 +289,9 @@ public class TicTacToe {
         }
     }
 
-    private static char getCell(int x, int y) {
-        if (x > -1 && x < SIZE && y > -1 && y < SIZE)
-            return map[x][y];
+    private static char getCell(Coords coords) {
+      if(coords.isValid(SIZE - 1))
+            return map[coords.getX()][coords.getY()];
         return DOT_NULL;
     }
 
