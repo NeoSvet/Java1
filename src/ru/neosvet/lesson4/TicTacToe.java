@@ -167,7 +167,7 @@ public class TicTacToe {
 
         Steps steps = getSteps(line);
         while (true) {
-            coords.putSteps(steps);
+            coords.applySteps(steps);
             cell = getCell(coords);
             if (cell == symbol) {
                 if (++k == LINE_FOR_WIN)
@@ -253,7 +253,7 @@ public class TicTacToe {
 
         Steps steps = getSteps(line);
         while (true) {
-            coords.putSteps(steps);
+            coords.applySteps(steps);
             if (getCell(coords) == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return true;

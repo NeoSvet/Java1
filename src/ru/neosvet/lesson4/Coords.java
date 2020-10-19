@@ -30,7 +30,7 @@ public class Coords {
         return x > -1 && x <= max && y > -1 && y <= max;
     }
 
-    public void putSteps(Steps steps) {
+    public void applySteps(Steps steps) {
         x += steps.getOnX();
         y += steps.getOnY();
     }
