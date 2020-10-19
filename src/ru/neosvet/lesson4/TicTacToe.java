@@ -160,18 +160,18 @@ public class TicTacToe {
         return result;
     }
 
-    private static Coords getPointFromCheckChanceLine(char symbol, Coords coords, Line line) {
+    private static Coords getPointFromCheckChanceLine(char symbol, Coords source, Line line) {
         char cell;
-        int k = 1, x = coords.getX(), y = coords.getY();
         boolean firstSide = true;
         boolean hasEmpty = false;
         Coords result = new Coords();
+        Coords coords = source.clone();
+        int k = 1;
 
         Point steps = getSteps(line);
         while (true) {
-            x += steps.x;
-            y += steps.y;
-            cell = getCell(new Coords(x, y));
+            coords.putSteps(steps);
+            cell = getCell(coords);
             if (cell == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return result;
@@ -179,12 +179,11 @@ public class TicTacToe {
                 firstSide = false;
                 steps.x = steps.x * -1;
                 steps.y = steps.y * -1;
-                x = coords.getX();
-                y = coords.getY();
+                coords = source.clone();
             } else if (cell == DOT_EMPTY) {
                 if (hasEmpty)
                     break;
-                result = new Coords(x, y);
+                result = coords.clone();
                 if (++k == LINE_FOR_WIN)
                     return result;
                 hasEmpty = true;
@@ -253,24 +252,23 @@ public class TicTacToe {
         return false;
     }
 
-    private static boolean checkLine(Coords coords, Line line) {
-        int k = 1, x = coords.getX(), y = coords.getY();
-        char symbol = map[x][y];
+    private static boolean checkLine(Coords source, Line line) {
+        char symbol = getCell(source);
+        Coords coords = source.clone();
         boolean firstSide = true;
+        int k = 1;
 
         Point steps = getSteps(line);
         while (true) {
-            x += steps.x;
-            y += steps.y;
-            if (getCell(new Coords(x, y)) == symbol) {
+            coords.putSteps(steps);
+            if (getCell(coords) == symbol) {
                 if (++k == LINE_FOR_WIN)
                     return true;
             } else if (firstSide) {
                 firstSide = false;
                 steps.x = steps.x * -1;
                 steps.y = steps.y * -1;
-                x = coords.getX();
-                y = coords.getY();
+                coords = source.clone();
             } else
                 return false;
         }
