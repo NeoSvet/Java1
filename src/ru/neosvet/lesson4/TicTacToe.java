@@ -153,8 +153,7 @@ public class TicTacToe {
         result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_ONE);
         if (result.exists())
             return result;
-        result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
-        return result;
+        return getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
     }
 
     private static Coords getCoordsFromCheckChanceLine(char symbol, Coords source, Line line) {
