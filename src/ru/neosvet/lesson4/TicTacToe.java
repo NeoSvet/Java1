@@ -11,9 +11,9 @@ public class TicTacToe {
     private static final char DOT_EMPTY = '•', DOT_NULL = 'n', DOT_FIRST = 'X', DOT_SECOND = 'O';
     private static final String EMPTY = " ";
 
-    private static char[][] map = new char[SIZE][SIZE];
-    private static Scanner scanner = new Scanner(System.in);
-    private static Random random = new Random();
+    private static final char[][] map = new char[SIZE][SIZE];
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final Random random = new Random();
     private static boolean human_first;
 
     public static void main(String[] args) {
@@ -21,15 +21,13 @@ public class TicTacToe {
     }
 
     private static void launchGame() {
-        while (true) {
+        do {
             System.out.println("Вы желаете ходить первым или вторым? 1 – первым / другое - вторым");
             human_first = scanner.next().equals("1");
             initMap();
             playGame();
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
-            if (!scanner.next().equals("1"))
-                break;
-        }
+        } while (scanner.next().equals("1"));
     }
 
     private static void initMap() {
@@ -246,10 +244,7 @@ public class TicTacToe {
             return true;
         if (checkLine(coords, Line.DIAGONAL_ONE))
             return true;
-        if (checkLine(coords, Line.DIAGONAL_TWO))
-            return true;
-
-        return false;
+        return checkLine(coords, Line.DIAGONAL_TWO);
     }
 
     private static boolean checkLine(Coords source, Line line) {
