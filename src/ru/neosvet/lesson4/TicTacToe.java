@@ -117,12 +117,12 @@ public class TicTacToe {
 
         char ai = human_first ? DOT_SECOND : DOT_FIRST;
         coords = getCoordsFromCheckChance(ai);
-        if (coords.isExists())
+        if (coords.exists())
             return coords;
 
         char human = human_first ? DOT_FIRST : DOT_SECOND;
         coords = getCoordsFromCheckChance(human);
-        if (coords.isExists())
+        if (coords.exists())
             return coords;
 
         return new Coords(random.nextInt(SIZE), random.nextInt(SIZE));
@@ -134,7 +134,7 @@ public class TicTacToe {
             for (int y = 0; y < SIZE; y++) {
                 if (map[x][y] == symbol) {
                     coords = getCoordsFromCheckChance(x, y, symbol);
-                    if (coords.isExists())
+                    if (coords.exists())
                         return coords;
                 }
             }
@@ -145,13 +145,13 @@ public class TicTacToe {
     private static Coords getCoordsFromCheckChance(int x, int y, char symbol) {
         Coords result, coords = new Coords(x, y);
         result = getCoordsFromCheckChanceLine(symbol, coords, Line.ROW);
-        if (result.isExists())
+        if (result.exists())
             return result;
         result = getCoordsFromCheckChanceLine(symbol, coords, Line.COLUMN);
-        if (result.isExists())
+        if (result.exists())
             return result;
         result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_ONE);
-        if (result.isExists())
+        if (result.exists())
             return result;
         result = getCoordsFromCheckChanceLine(symbol, coords, Line.DIAGONAL_TWO);
         return result;

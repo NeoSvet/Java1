@@ -22,7 +22,7 @@ public class Coords {
         return y;
     }
 
-    public boolean isExists() {
+    public boolean exists() {
         return exists;
     }
 
