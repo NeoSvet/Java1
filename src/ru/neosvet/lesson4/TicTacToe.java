@@ -65,14 +65,16 @@ public class TicTacToe {
     }
 
     private static void playGame() {
+        if(human_first)
+            printMap();
         Coords coords;
         boolean isHuman = human_first;
         while (true) {
-            printMap();
             if (isHuman)
                 coords = getCoordsHumanTurn();
             else
                 coords = getCoordsAiTurn();
+            printMap();
             if(checkEnd(coords, isHuman))
                 return;
             isHuman = !isHuman;
@@ -210,14 +212,12 @@ public class TicTacToe {
 
     private static boolean checkEnd(Coords coords, boolean isHuman) {
         if (checkWinOnCell(coords)) {
-            printMap();
             System.out.println(isHuman ? "УРА! Вы победили!"
                     : "Восстание близко! AI победил");
             return true;
         }
 
         if (isMapFull()) {
-            printMap();
             System.out.println("Ничья!");
             return true;
         }
