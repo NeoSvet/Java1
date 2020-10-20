@@ -25,7 +25,7 @@ public class TicTacToe {
             human_first = scanner.next().equals("1");
             initMap();
             playGame();
-            System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
+            System.out.println("Повторить игру еще раз? 1 – да / другое - закончить");
         } while (scanner.next().equals("1"));
     }
 
