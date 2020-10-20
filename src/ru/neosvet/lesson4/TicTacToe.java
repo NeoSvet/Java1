@@ -65,19 +65,21 @@ public class TicTacToe {
     }
 
     private static void playGame() {
-        boolean isEnd;
-        boolean firstStep = true;
-        do {
+        Coords coords;
+        boolean isHuman = human_first;
+        while (true) {
             printMap();
-            if ((human_first && firstStep) || (!human_first && !firstStep))
-                isEnd = isEndAfterHumanTurn();
+            if (isHuman)
+                coords = getCoordsHumanTurn();
             else
-                isEnd = isEndAfterAiTurn();
-            firstStep = !firstStep;
-        } while (!isEnd);
+                coords = getCoordsAiTurn();
+            if(checkEnd(coords, isHuman))
+                return;
+            isHuman = !isHuman;
+        }
     }
 
-    private static boolean isEndAfterHumanTurn() {
+    private static Coords getCoordsHumanTurn() {
         int x, y;
         System.out.println("\nВведите номер строки и столбца! (0 - для выхода)");
         while (true) {
@@ -98,10 +100,10 @@ public class TicTacToe {
         }
 
         map[x][y] = human_first ? DOT_FIRST : DOT_SECOND;
-        return checkEnd(new Coords(x, y), true);
+        return new Coords(x, y);
     }
 
-    private static boolean isEndAfterAiTurn() {
+    private static Coords getCoordsAiTurn() {
         Coords coords;
         System.out.println("\nХод компьютера!");
         do {
@@ -109,7 +111,7 @@ public class TicTacToe {
         } while (isBusyCell(coords));
 
         map[coords.getX()][coords.getY()] = human_first ? DOT_SECOND : DOT_FIRST;
-        return checkEnd(coords, false);
+        return coords;
     }
 
     private static Coords getCoordsForAiStep() {
