@@ -13,6 +13,10 @@ public class Clerk {
         this.age = age;
     }
 
+    public int getAge() {
+        return age;
+    }
+
     public void print() {
         System.out.printf("Сотрудник: %s, должность: %s, email: %s, телефон: %s, " +
                 "зарплата: %,d, возраст: %d.%n", name, position, email, phone, salary, age);
