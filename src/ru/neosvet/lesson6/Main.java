@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    private static final int maxRun = 600, maxSwim = 14, maxJump = 3;
-    private static final int minRun = 50, minSwim = 3;
+    private static final int MAX_RUN = 600, MAX_SWIM = 14, MAX_JUMP = 3;
+    private static final int MIN_RUN = 50, MIN_SWIM = 3;
 
     public static void main(String[] args) {
         Dog dog = new Dog("Бобик", true);
@@ -22,9 +22,9 @@ public class Main {
         int run, swim, i;
         float jump;
         do {
-            run = random.nextInt(maxRun - minRun) + minRun;
-            swim = random.nextInt(maxSwim - minSwim) + minSwim;
-            jump = (float) random.nextInt(maxJump) + random.nextFloat();
+            run = random.nextInt(MAX_RUN - MIN_RUN) + MIN_RUN;
+            swim = random.nextInt(MAX_SWIM - MIN_SWIM) + MIN_SWIM;
+            jump = (float) random.nextInt(MAX_JUMP) + random.nextFloat();
             for (i = 0; i < animals.length; i++) {
                 animals[i].run(run);
                 animals[i].swim(swim);

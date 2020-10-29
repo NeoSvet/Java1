@@ -3,7 +3,7 @@ package ru.neosvet.lesson6;
 import java.util.Random;
 
 public class Animal {
-    private final int maxDeviation = 20;
+    private final int MAX_DEVIATION = 20;
     private int limitRun;
     private int limitSwim;
     private float limitJump;
@@ -28,7 +28,7 @@ public class Animal {
     }
 
     private float getWithDeviation(float value) {
-        int procent = random.nextInt(maxDeviation);
+        int procent = random.nextInt(MAX_DEVIATION);
         if (random.nextBoolean())
             value += value * procent / 100f;
         else
