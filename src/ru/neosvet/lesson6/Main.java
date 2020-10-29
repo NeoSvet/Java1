@@ -10,6 +10,8 @@ public class Main {
     public static void main(String[] args) {
         Dog dog = new Dog("Бобик");
         Cat cat = new Cat("Мурка");
+        dog.printInfo();
+        cat.printInfo();
 
         startObstacles(new Animal[]{dog, cat});
     }

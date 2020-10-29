@@ -34,4 +34,8 @@ public class Animal {
             System.out.printf("%s прыгнул(а) %.1f м. :)%n", name, height);
     }
 
+    public void printInfo() {
+        System.out.printf("%s умеет бегать на %d м., плавать на %d м. и прыгать на %.1f м.%n",
+                name, limitRun, limitSwim, limitJump);
+    }
 }
