@@ -19,6 +19,10 @@ public class Animal {
         this.limitJump = getWithDeviation(limitJump);
     }
 
+    public String getName() {
+        return name;
+    }
+
     private int getWithDeviation(int value) {
         return (int) getWithDeviation((float) value);
     }
@@ -40,10 +44,6 @@ public class Animal {
     }
 
     public void swim(int length) {
-        if (limitSwim == 0) {
-            System.out.printf("%s не умеет плавыть и не может проплыть %d м.%n", name, length);
-            return;
-        }
         if (length > limitSwim)
             System.out.printf("%s не смог%s проплыть %d м. :(%n", name, getEndingLA(), length);
         else
