@@ -38,6 +38,10 @@ public class Animal {
     }
 
     public void swim(int length) {
+        if(limitSwim == 0) {
+            System.out.printf("%s не умеет плавыть и не может проплыть %d м.%n", name, length);
+            return;
+        }
         if (length > limitSwim)
             System.out.printf("%s не смог(ла) проплыть %d м. :(%n", name, length);
         else
@@ -52,6 +56,11 @@ public class Animal {
     }
 
     public void printInfo() {
+        if(limitSwim == 0) {
+            System.out.printf("%s умеет бегать на %d м. и прыгать на %.1f м., а плавать не умеет.%n",
+                    name, limitRun, limitJump);
+            return;
+        }
         System.out.printf("%s умеет бегать на %d м., плавать на %d м. и прыгать на %.1f м.%n",
                 name, limitRun, limitSwim, limitJump);
     }
