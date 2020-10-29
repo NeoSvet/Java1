@@ -1,16 +1,33 @@
 package ru.neosvet.lesson6;
 
+import java.util.Random;
+
 public class Animal {
+    private final int maxDeviation = 20;
     private int limitRun;
     private int limitSwim;
     private float limitJump;
     private String name;
+    Random random = new Random();
 
     public Animal(String name, int limitRun, int limitSwim, float limitJump) {
         this.name = name;
-        this.limitRun = limitRun;
-        this.limitSwim = limitSwim;
-        this.limitJump = limitJump;
+        this.limitRun = getWithDeviation(limitRun);
+        this.limitSwim = getWithDeviation(limitSwim);
+        this.limitJump = getWithDeviation(limitJump);
+    }
+
+    private int getWithDeviation(int value) {
+        return (int) getWithDeviation((float) value);
+    }
+
+    private float getWithDeviation(float value) {
+        int procent = random.nextInt(maxDeviation);
+        if (random.nextBoolean())
+            value += value * procent / 100f;
+        else
+            value -= value * procent / 100f;
+        return value;
     }
 
     public void run(int length) {
