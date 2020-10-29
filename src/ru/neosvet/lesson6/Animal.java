@@ -4,12 +4,11 @@ import java.util.Random;
 
 public class Animal {
     private final int MAX_DEVIATION = 20;
-    private int limitRun;
-    private int limitSwim;
+    private int limitRun, limitSwim;
     private float limitJump;
     private String name;
     private boolean male;
-    Random random = new Random();
+    private Random random = new Random();
 
     public Animal(String name, boolean male, int limitRun, int limitSwim, float limitJump) {
         this.name = name;
