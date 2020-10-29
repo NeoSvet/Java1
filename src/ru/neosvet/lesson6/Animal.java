@@ -8,10 +8,12 @@ public class Animal {
     private int limitSwim;
     private float limitJump;
     private String name;
+    private boolean male;
     Random random = new Random();
 
-    public Animal(String name, int limitRun, int limitSwim, float limitJump) {
+    public Animal(String name, boolean male, int limitRun, int limitSwim, float limitJump) {
         this.name = name;
+        this.male = male;
         this.limitRun = getWithDeviation(limitRun);
         this.limitSwim = getWithDeviation(limitSwim);
         this.limitJump = getWithDeviation(limitJump);
@@ -32,31 +34,39 @@ public class Animal {
 
     public void run(int length) {
         if (length > limitRun)
-            System.out.printf("%s не смог(ла) пробежать %d м. :(%n", name, length);
+            System.out.printf("%s не смог%s пробежать %d м. :(%n", name, getEndingLA(), length);
         else
-            System.out.printf("%s пробежал(а) %d м. :)%n", name, length);
+            System.out.printf("%s пробежал%s %d м. :)%n", name, getEndingA(), length);
     }
 
     public void swim(int length) {
-        if(limitSwim == 0) {
+        if (limitSwim == 0) {
             System.out.printf("%s не умеет плавыть и не может проплыть %d м.%n", name, length);
             return;
         }
         if (length > limitSwim)
-            System.out.printf("%s не смог(ла) проплыть %d м. :(%n", name, length);
+            System.out.printf("%s не смог%s проплыть %d м. :(%n", name, getEndingLA(), length);
         else
-            System.out.printf("%s проплыл(а) %d м. :)%n", name, length);
+            System.out.printf("%s проплыл%s %d м. :)%n", name, getEndingA(), length);
     }
 
     public void jump(float height) {
         if (height > limitJump)
-            System.out.printf("%s не смог(ла) прыгнуть на %.1f м. :(%n", name, height);
+            System.out.printf("%s не смог%s прыгнуть на %.1f м. :(%n", name, getEndingLA(), height);
         else
-            System.out.printf("%s прыгнул(а) %.1f м. :)%n", name, height);
+            System.out.printf("%s прыгнул%s %.1f м. :)%n", name, getEndingA(), height);
+    }
+
+    private String getEndingA() {
+        return male ? "" : "a";
+    }
+
+    private String getEndingLA() {
+        return male ? "" : "лa";
     }
 
     public void printInfo() {
-        if(limitSwim == 0) {
+        if (limitSwim == 0) {
             System.out.printf("%s умеет бегать на %d м. и прыгать на %.1f м., а плавать не умеет.%n",
                     name, limitRun, limitJump);
             return;

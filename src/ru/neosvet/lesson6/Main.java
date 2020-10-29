@@ -8,8 +8,8 @@ public class Main {
     private static final int minRun = 50, minSwim = 3;
 
     public static void main(String[] args) {
-        Dog dog = new Dog("Бобик");
-        Cat cat = new Cat("Мурка");
+        Dog dog = new Dog("Бобик", true);
+        Cat cat = new Cat("Мурка", false);
         dog.printInfo();
         cat.printInfo();
 
