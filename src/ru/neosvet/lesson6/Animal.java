@@ -29,9 +29,9 @@ public class Animal {
 
     public void jump(float height) {
         if (height > limitJump)
-            System.out.printf("%s не смог(ла) прыгнуть на %d м. :(%n", name, height);
+            System.out.printf("%s не смог(ла) прыгнуть на %.1f м. :(%n", name, height);
         else
-            System.out.printf("%s прыгнул(а) %d м. :)%n", name, height);
+            System.out.printf("%s прыгнул(а) %.1f м. :)%n", name, height);
     }
 
 }
