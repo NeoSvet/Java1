@@ -29,4 +29,8 @@ public class Cat {
             System.out.println("Кот поел, но не наелся!");
         }
     }
+
+    public void addAppetite(int add) {
+        appetite += add;
+    }
 }
