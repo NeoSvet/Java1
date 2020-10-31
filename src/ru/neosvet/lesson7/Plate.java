@@ -1,8 +1,7 @@
 package ru.neosvet.lesson7;
 
 public class Plate {
-
-    private int capacity;
+    private final int capacity;
     private int food;
 
     public int getFood() {
@@ -19,9 +18,8 @@ public class Plate {
 
     @Override
     public String toString() {
-        return "Plate{" + "capacity=" + capacity + ", food=" + food + '}';
+        return "Plate {capacity=" + capacity + ", food=" + food + "}";
     }
-
 
     public void printInfo() {
         System.out.println(this);

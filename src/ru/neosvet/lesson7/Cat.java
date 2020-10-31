@@ -1,7 +1,6 @@
 package ru.neosvet.lesson7;
 
 public class Cat {
-
     private String name;
     private int appetite;
 
@@ -16,8 +15,7 @@ public class Cat {
         if (plate.getFood() >= appetite) {
             doEat(plate);
             System.out.println("Кот доволен");
-        }
-        else {
+        } else {
             System.out.println("Мне нужна еда!");
         }
     }

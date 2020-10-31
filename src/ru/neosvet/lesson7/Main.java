@@ -1,6 +1,6 @@
 package ru.neosvet.lesson7;
 
-public class Test {
+public class Main {
 
     public static void main(String[] args) {
         Cat cat = new Cat("Борис Николаевич", 3);
@@ -10,7 +10,6 @@ public class Test {
         plate.printInfo();
         cat.eat(plate);
         plate.printInfo();
-
 
     }
 }
