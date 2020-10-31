@@ -4,12 +4,12 @@ public class Plate {
     private final int capacity;
     private int food;
 
-    public int getFood() {
-        return food;
-    }
-
     public Plate(int capacity) {
         this.capacity = capacity;
+    }
+
+    public int getFood() {
+        return food;
     }
 
     public void addFood(int food) {
