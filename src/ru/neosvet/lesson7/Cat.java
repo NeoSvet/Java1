@@ -22,6 +22,7 @@ public class Cat {
     private void doEat(Plate plate) {
         if (plate.getFood() >= appetite) {
             plate.decreaseFood(appetite);
+            appetite = 0;
             System.out.println("Кот наелся!");
         } else {
             plate.decreaseFood(plate.getFood());
