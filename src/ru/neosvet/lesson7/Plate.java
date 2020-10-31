@@ -26,8 +26,8 @@ public class Plate {
     @Override
     public String toString() {
         if (food == 0)
-            return "Тарелка пуста!";
-        return "В тарелке " + food + " из " + capacity;
+            return "Кормушка пуста!";
+        return "В кормушке " + food + " из " + capacity;
     }
 
     public void printInfo() {
