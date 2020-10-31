@@ -10,17 +10,23 @@ public class Cat {
     }
 
     public void eat(Plate plate) {
-        System.out.println("Котик питается");
-
-        if (plate.getFood() >= appetite) {
-            doEat(plate);
-            System.out.println("Кот доволен");
-        } else {
-            System.out.println("Мне нужна еда!");
+        if (plate.getFood() == 0) {
+            System.out.println("Котик не может поесть, ибо кормушка пуста!");
+            return;
         }
+        System.out.print("Котик питается. ");
+
+        doEat(plate);
     }
 
     private void doEat(Plate plate) {
-        plate.decreaseFood(appetite);
+        if (plate.getFood() >= appetite) {
+            plate.decreaseFood(appetite);
+            System.out.println("Кот наелся!");
+        } else {
+            plate.decreaseFood(plate.getFood());
+            appetite -= plate.getFood();
+            System.out.println("Кот поел, но не наелся!");
+        }
     }
 }
