@@ -3,6 +3,7 @@ package ru.neosvet.lesson7;
 public class Cat {
     private String name;
     private int appetite;
+    private boolean live = true;
 
     public Cat(String name, int appetite) {
         this.appetite = appetite;
@@ -43,5 +44,18 @@ public class Cat {
 
     public void addAppetite(int add) {
         appetite += add;
+    }
+
+    public int getAppetite() {
+        return appetite;
+    }
+
+    public void dead() {
+        System.out.printf("Котик %s помер от голода! :(%n", name);
+        live = false;
+    }
+
+    public boolean isDead() {
+        return !live;
     }
 }

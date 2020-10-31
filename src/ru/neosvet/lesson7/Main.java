@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    private static final int APPETITE_FOR_DEATH = 20;
     private static final int MIN_APPETITE = 2, MAX_APPETITE = 5;
     private static final int MIN_FOOD = 4;
     private static final int MIN_CAPACITY = 10, MAX_CAPACITY = 15;
@@ -24,8 +25,14 @@ public class Main {
                 plates[i].printInfo();
             }
             for (i = 0; i < cats.length; i++) {
+                if (cats[i].isDead())
+                    continue;
                 cats[i].eat(plates);
-                cats[i].addAppetite(random.nextInt(MAX_APPETITE) + MIN_APPETITE);
+                if (cats[i].getAppetite() > APPETITE_FOR_DEATH) {
+                    cats[i].dead();
+                } else {
+                    cats[i].addAppetite(random.nextInt(MAX_APPETITE) + MIN_APPETITE);
+                }
             }
             for (i = 0; i < plates.length; i++) {
                 plates[i].printInfo();
