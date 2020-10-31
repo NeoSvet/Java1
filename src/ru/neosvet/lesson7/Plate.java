@@ -8,6 +8,10 @@ public class Plate {
         this.capacity = capacity;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public int getFood() {
         return food;
     }
