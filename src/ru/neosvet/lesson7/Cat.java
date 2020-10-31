@@ -11,10 +11,10 @@ public class Cat {
 
     public void eat(Plate plate) {
         if (plate.getFood() == 0) {
-            System.out.println("Котик не может поесть, ибо кормушка пуста!");
+            System.out.printf("Котик %s не может поесть, ибо кормушка пуста!%n", name);
             return;
         }
-        System.out.print("Котик питается. ");
+        System.out.printf("Котик %s питается. ", name);
 
         doEat(plate);
     }
