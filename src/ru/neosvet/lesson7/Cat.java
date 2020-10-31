@@ -9,6 +9,16 @@ public class Cat {
         this.name = name;
     }
 
+    public void eat(Plate[] plates) {
+        if (appetite == 0) {
+            System.out.printf("Котик %s не голоден!%n", name);
+            return;
+        }
+        for (int i = 0; i < plates.length && appetite > 0; i++) {
+            eat(plates[i]);
+        }
+    }
+
     public void eat(Plate plate) {
         if (plate.getFood() == 0) {
             System.out.printf("Котик %s не может поесть, ибо кормушка пуста!%n", name);
