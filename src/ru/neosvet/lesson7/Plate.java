@@ -13,7 +13,10 @@ public class Plate {
     }
 
     public void addFood(int food) {
-        this.food += food;
+        if (this.food + food > capacity)
+            this.food = capacity;
+        else
+            this.food += food;
     }
 
     @Override
